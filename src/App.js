@@ -7,6 +7,7 @@ import Create from "./component/Create"
 import Update from "./component/Update"
 import Register from "./component/Auth/Register"
 import Login from "./component/Auth/Login"
+import PrivateRouter from "./PrivateRoute/PrivateRouter"
 
 
 function App(props) {
@@ -14,9 +15,11 @@ function App(props) {
   <BrowserRouter>
       <Menu />
       <Routes>
-      <Route path={'/'} element={<Home/>} />
-      <Route path={'/create'} element={<Create/>} />
-      <Route path={'/update/ :id'} element={<Update/>} />
+        <Route element={<PrivateRouter/>}>
+          <Route path={'/'} element={<Home/>} />
+          <Route path={'/create'} element={<Create/>} />
+          <Route path={'/update/ :id'} element={<Update/>} />
+        </Route>
       <Route path={'/login'} element={<Login/>} />
       <Route path={'/register'} element={<Register/>} />
       <Route path={'/'} element={<Pnf/>} />
