@@ -1,12 +1,27 @@
 import React, { useContext } from "react";
-import { NavLink } from 'react-router-dom'
+import { NavLink, Navigate, useNavigate } from 'react-router-dom'
 import { AuthContext  } from "../Context/AuthContext";
+import Fireapp from "../Config/firebaseConfig";
+import { toast } from "react-toastify";
 
 function Menu(props) {
 
     const context = useContext(AuthContext)
     const currentUser = context.currentUser
 
+    const navigate = useNavigate()
+
+    // logout logic
+    const logoutUser = async () => {
+        if(window.confirm(`Are you sure to logout?`)) {
+            await Fireapp.auth().signOut()
+            .then(res => {
+                toast.success("User Logout Successfully..");
+                navigate('/')
+            })
+            .catch(err => toast.error(err.message))
+        }
+    }
 
     return (
     <nav className="navbar navbar-expand-md navbar-dark bg-primary">
@@ -32,7 +47,7 @@ function Menu(props) {
                 </ul>
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <NavLink className="nav-link btn btn-danger">Logout</NavLink>
+                        <NavLink onClick={logoutUser} className="nav-link btn btn-danger">Logout</NavLink>
                     </li>
                 </ul>
                         </React.Fragment>
